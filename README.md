@@ -1,8 +1,8 @@
-# AI-Assisted CI/CD Pipeline Automation with GitHub Actions for Containerized Node.js Application on AWS
+# CI/CD Pipeline with GitHub Actions, Docker, and AWS EC2
 
 ## Project Overview
 
-This project demonstrates an end-to-end AI-assisted CI/CD pipeline using GitHub Actions, Docker, DockerHub, and AWS EC2.
+This project demonstrates an end-to-end CI/CD pipeline using GitHub Actions, Docker, DockerHub, and AWS EC2.
 
 The pipeline automatically builds the Node.js application, runs tests, builds and pushes a Docker image to DockerHub, and deploys the latest container to AWS EC2 — all triggered by a single git push.
 
@@ -35,7 +35,7 @@ Containerized Node.js Application Live on AWS EC2
 - DockerHub
 - AWS EC2
 - Ubuntu 22.04
-- Node.js 22
+- Node.js 18
 - Linux
 - Git and GitHub
 
@@ -45,13 +45,13 @@ Containerized Node.js Application Live on AWS EC2
 
 - Automated CI/CD pipeline with 3 separate jobs
 - Multi-stage CI/CD workflow with job dependencies
-- AI-assisted workflow generation
 - Dockerized Node.js application
+- Docker layer caching for optimized image builds
 - Automated EC2 deployment on every push
 - DockerHub integration
 - GitHub Secrets management
 - SSH-based remote deployment
-- Error handling implementation
+- Zero-touch deployment with automatic container replacement
 - Test stage integration
 
 ---
@@ -78,7 +78,7 @@ Workflow Path:
 ### Job 1 — test
 
 1. Checkout source code
-2. Setup Node.js 22
+2. Setup Node.js
 3. Install dependencies
 4. Run tests
 
@@ -106,15 +106,13 @@ Workflow Path:
 - Instance Type: t3.small
 - Docker installed
 - Git installed
-- Node.js installed
 
 ### Security Group Ports
 
 | Port | Purpose |
 |------|----------|
-| 22 | SSH |
+| 22   | SSH |
 | 3000 | Containerized Node.js Application |
-| 80 | HTTP |
 
 ---
 
@@ -146,26 +144,20 @@ The pipeline completes automated deployment within approximately 1 minute from c
 
 ---
 
-## AI Utilization in This Project
+## Troubleshooting
 
-AI tools were used to accelerate:
+### SSH Authentication Failure on EC2
 
-- GitHub Actions workflow generation
-- Dockerfile creation
-- Deployment scripting
-- CI/CD pipeline structuring
-- Error handling improvements
+**Issue:** Pipeline failed at the deploy stage with SSH authentication errors.
 
-Manual implementation included:
+**Root Cause:** Incorrect ownership and permissions on `~/.ssh/authorized_keys` on the EC2 instance caused the SSH daemon to reject the key.
 
-- AWS EC2 setup and configuration
-- Docker installation on EC2
-- GitHub Secrets configuration
-- DockerHub repository setup
-- SSH authentication debugging
-- authorized_keys permission troubleshooting
-- YAML syntax debugging
-- Deployment validation
+**Fix:**
+```bash
+chown ubuntu:ubuntu /home/ubuntu/.ssh/authorized_keys
+chmod 600 /home/ubuntu/.ssh/authorized_keys
+chmod 700 /home/ubuntu/.ssh
+```
 
 ---
 
@@ -181,13 +173,12 @@ Through this project, I learned:
 - SSH-based automated deployment
 - Linux file permission troubleshooting
 - GitHub Secrets management
-- AI-assisted DevOps workflow implementation
 
 ---
 
 ## Final Outcome
 
-Successfully implemented an AI-assisted automated CI/CD pipeline using GitHub Actions for deploying a containerized Node.js application on AWS EC2.
+Successfully implemented an automated CI/CD pipeline using GitHub Actions for deploying a containerized Node.js application on AWS EC2.
 
 The pipeline executes 3 sequential jobs — test, docker, and deploy — and performs end-to-end automated deployment from a single git push to the main branch.
 
@@ -195,8 +186,8 @@ The pipeline executes 3 sequential jobs — test, docker, and deploy — and per
 
 ## Author
 
-**Mohan M** 
+**Mohan M**
 
-AWS & DevOps Engineer (Fresher)
+AWS & DevOps Engineer
 
 ---
