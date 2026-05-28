@@ -66,4 +66,4 @@ jobs:
             docker run -d \
               --name node-app \
               -p 3000:3000 \
-              ${{ secrets.DOCKER_USERNAME }}/node-app:latest
+              ${{ secrets.DOCKER_USERNAME }}/node-app:latest 
